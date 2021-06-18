@@ -1,54 +1,76 @@
-<div class="row">
-  <div class="col-md-3">
-    <span class="hipster img-fluid rounded"></span>
+<div [ngSwitch]='isAuthenticated()'>
+  <div *ngSwitchCase="true">
+
   </div>
-
-  <div class="col-md-9">
-    <h1 class="display-4">Welcome, Java Hipster!</h1>
-
-    <p class="lead">This is your homepage</p>
-
-    <div [ngSwitch]="isAuthenticated()">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account">You are logged in as user "{{ account.login }}".</span>
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span>If you want to </span>
-        <a class="alert-link" (click)="login()">sign in</a
-        ><span
-          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
-          password="user").</span
-        >
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span>You don't have an account yet?</span>&nbsp;
-        <a class="alert-link" routerLink="account/register">Register a new account</a>
+  <div *ngSwitchCase="false">
+    <div class='row justify-content-center'>
+      <div class='col-lg-6 col-md-8 col-sm-10'>
+        <nb-card accent='info' style='width: 100%'>
+          <nb-card-header><h3 style='text-align: center' jhiTranslate='login.title' data-cy='loginTitle'>Se connecter à
+            Welcomer</h3></nb-card-header>
+          <nb-card-body>
+            <div class='alert alert-danger' *ngIf='authenticationError'
+                 jhiTranslate='login.messages.error.authentication'
+                 data-cy='loginError'>
+              <strong>Failed to sign in!</strong> Please check your credentials and try again.
+            </div>
+            <form class='form' role='form' (ngSubmit)='login()' [formGroup]='loginForm'>
+              <div class='modal-body'>
+                <label class='label' for='username' jhiTranslate='global.form.username.label'>Nom d'utilisateur</label>
+                <nb-form-field>
+                  <nb-icon nbPrefix icon='person' pack='eva'></nb-icon>
+                  <input
+                    nbInput
+                    fullWidth
+                    type='text'
+                    class='form-control'
+                    name='username'
+                    id='username'
+                    placeholder="Nom d'utilisateur"
+                    formControlName='username'
+                    #username
+                    data-cy='username'
+                    shape='round'
+                  />
+                </nb-form-field>
+              </div>
+              <div class='modal-body'>
+                <label class='label' for='password' jhiTranslate='login.form.password'>Mot de passe</label>
+                <nb-form-field>
+                  <nb-icon nbPrefix icon='lock' pack='eva'></nb-icon>
+                  <input
+                    nbInput
+                    fullWidth
+                    type='password'
+                    class='form-control'
+                    name='password'
+                    id='password'
+                    placeholder='Mot de passe'
+                    formControlName='password'
+                    data-cy='password'
+                    shape='round'
+                  />
+                </nb-form-field>
+              </div>
+              <div class='modal-body'>
+                <button
+                  nbButton
+                  fullWidth
+                  status='primary'
+                  size='medium'
+                  shape='round'
+                  type='submit'
+                  class='btn btn-primary'
+                  jhiTranslate='login.form.button'
+                  data-cy='submit'
+                >
+                  Se connecter
+                </button>
+              </div>
+            </form>
+          </nb-card-body>
+        </nb-card>
       </div>
     </div>
-
-    <p>If you have any question on JHipster:</p>
-
-    <ul>
-      <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">JHipster homepage</a></li>
-      <li>
-        <a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster on Stack Overflow</a>
-      </li>
-      <li>
-        <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">JHipster public chat room</a>
-      </li>
-      <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">follow @jhipster on Twitter</a></li>
-    </ul>
-
-    <p>
-      <span>If you like JHipster, don't forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
-    </p>
   </div>
 </div>

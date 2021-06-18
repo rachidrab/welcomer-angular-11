@@ -69,18 +69,23 @@ export const USER_MENU: NbMenuItem[] = [
         title: 'Utilisateurs',
         icon: 'people-outline',
         link: 'admin/user-management',
+      }
+    ],
+  },
+  {
+    title: 'Demandes',
+    icon: 'monitor-outline',
+    expanded: false,
+    children: [
+      {
+        title: 'Lancer une demande',
+        icon: 'plus-outline',
+        link: 'request/new',
       },
       {
-        title: 'Audit',
-        icon: 'monitor-outline',
-        expanded: false,
-        children: [
-          {
-            title: 'Audit Rapports',
-            icon: 'options-outline',
-            link: 'admin/audit-report',
-          },
-        ],
+        title: 'Mes demandes',
+        icon: 'list-outline',
+        link: 'request',
       },
     ],
   },
