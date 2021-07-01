@@ -6,6 +6,9 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from 'app/login/login.service';
+import { HttpResponse } from '@angular/common/http';
+import { IRequest } from 'app/entities/request/request.model';
+import { RequestService } from 'app/entities/request/service/request.service';
 
 @Component({
   selector: 'jhi-home',
@@ -21,12 +24,82 @@ export class HomeComponent implements OnInit, OnDestroy {
     password: [null, [Validators.required]],
     rememberMe: [false]
   });
+  requests?: IRequest[];
+  chart = [];
 
-  constructor(private accountService: AccountService, private router: Router, private fb: FormBuilder, private loginService: LoginService) {
+  public usersBarChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    yAxis: {
+      beginAtZero: true
+    }
+  };
+  public usersBarChartLabels = ['Utilisateurs'];
+  public usersBarChartLegend = true;
+  public usersBarChartData = [
+    {
+      data: [11],
+      backgroundColor: [
+        'rgba(27,60,255,0.59)'
+      ],
+      label: 'Utilisateurs'
+    }
+  ];
+
+  public requestBarChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    yAxis: {
+      beginAtZero: true
+    }
+  };
+  public requestBarChartLabels = ['Demandes'];
+  public requestBarChartLegend = true;
+  public requestBarChartData = [
+    {
+      data: [20],
+      backgroundColor: [
+        'rgba(27,60,255,0.59)'
+      ],
+      label: 'Demandes'
+    }
+  ];
+
+  public barChartOptions = {
+    maintainAspectRatio: false,
+    scaleShowVerticalLines: false,
+    responsive: true,
+    yAxis: {
+      beginAtZero: true
+    }
+  };
+  public barChartLabels = ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+  public barChartLegend = true;
+  public barChartData = [
+    {
+      data: [20, 13, 8, 12, 19, 4, 0, 0, 0, 0, 0, 0],
+      label: 'Demandes'
+    }
+  ];
+  public doughnutChartLabels = ['OffBoarding', 'OnBoarding', 'Expatriation'];
+  public doughnutChartData: number[] = [4, 23, 12];
+  public doughnutChartLabels1 = ['Demandes validées', 'Demandes non validées', 'Demandes validées et livrées', 'Demandes validées et non livrées'];
+  public doughnutChartData1: number[] = [23, 2, 21, 2];
+  constructor(private accountService: AccountService, private router: Router, private fb: FormBuilder, private loginService: LoginService, protected requestService: RequestService) {
   }
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
+    this.requestService
+      .query({})
+      .subscribe(
+        (res: HttpResponse<IRequest[]>) => {
+          this.requests = res.body ?? [];
+        }
+      );
+    if (this.requests !== undefined) {
+      this.doughnutChartData.push(this.requests.length);
+    }
   }
 
   isAuthenticated(): boolean {

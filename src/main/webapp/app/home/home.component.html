@@ -1,8 +1,82 @@
 <div [ngSwitch]='isAuthenticated()'>
-  <div *ngSwitchCase="true">
+  <div *ngSwitchCase='true'>
+
+    <div class='row'>
+      <div class='col-sm-6'>
+        <nb-card>
+          <nb-card-header>Nombre d'utilisateurs total</nb-card-header>
+          <nb-card-body>
+            <canvas baseChart
+                    [datasets]='usersBarChartData'
+                    [labels]='usersBarChartLabels'
+                    [options]='usersBarChartOptions'
+                    [legend]='usersBarChartLegend'
+                    chartType='bar'>
+            </canvas>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class='col-sm-6'>
+        <nb-card>
+          <nb-card-header>Nombre de demandes total</nb-card-header>
+          <nb-card-body>
+            <canvas baseChart
+                    [datasets]='requestBarChartData'
+                    [labels]='requestBarChartLabels'
+                    [options]='requestBarChartOptions'
+                    [legend]='requestBarChartLegend'
+                    chartType='bar'>
+            </canvas>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    <div clas='row'>
+      <div class='col-sm-12'>
+        <nb-card size='large'>
+          <nb-card-header>Nombre de demandes par mois</nb-card-header>
+          <nb-card-body>
+            <canvas baseChart
+                    [datasets]='barChartData'
+                    [labels]='barChartLabels'
+                    [options]='barChartOptions'
+                    [legend]='barChartLegend'
+                    chartType='bar'>
+            </canvas>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-sm-6'>
+        <nb-card>
+          <nb-card-header>Nombre d'utilisateurs par service</nb-card-header>
+          <nb-card-body>
+            <canvas baseChart
+                    [data]='doughnutChartData'
+                    [labels]='doughnutChartLabels'
+                    chartType='pie'>
+            </canvas>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class='col-sm-6'>
+        <nb-card>
+          <nb-card-header>Demandes validées/livrées</nb-card-header>
+          <nb-card-body>
+            <canvas baseChart
+                    [data]='doughnutChartData1'
+                    [labels]='doughnutChartLabels1'
+                    chartType='pie'>
+            </canvas>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
 
   </div>
-  <div *ngSwitchCase="false">
+  <div *ngSwitchCase='false'>
     <div class='row justify-content-center'>
       <div class='col-lg-6 col-md-8 col-sm-10'>
         <nb-card accent='info' style='width: 100%'>

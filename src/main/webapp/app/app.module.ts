@@ -41,6 +41,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from 'app/layouts/sidebar/sidebar.component';
 import { LayoutService } from 'app/services/layout.service';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { LayoutService } from 'app/services/layout.service';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
-    NbLayoutModule
+    NbLayoutModule,
+    ChartsModule
   ],
   providers: [
     LayoutService,

@@ -64,6 +64,7 @@ export class UserManagementComponent implements OnInit {
         page: this.page - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
+        'isOnBoarding': false,
       })
       .subscribe(
         (res: HttpResponse<User[]>) => {
@@ -107,4 +108,5 @@ export class UserManagementComponent implements OnInit {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.users = users;
   }
+
 }

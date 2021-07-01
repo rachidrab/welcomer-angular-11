@@ -1,3 +1,4 @@
+<!--
 <div class="row justify-content-center">
   <div class="col-8">
     <div *ngIf="user">
@@ -49,3 +50,150 @@
     </div>
   </div>
 </div>
+-->
+
+
+<div class="row" *ngIf="user">
+  <div class="col-4"><h2>{{user.firstName}} {{user.lastName}}</h2></div>
+  <div class="col-4">
+    <!-- <input #autoInput
+           nbInput
+           type="text"
+           placeholder="Rechercher un context"
+           [nbAutocomplete]="auto"
+           style="width: 100%; max-width: 100%;"
+    />
+
+    <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+
+        <nb-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+            {{ option }}
+        </nb-option>
+
+    </nb-autocomplete>-->
+  </div>
+  <div class="col-4">
+    <button class="float-right" nbButton routerLink='/admin/user-management/{{user.login}}/edit' status="primary">Mettre à jour</button>
+  </div>
+</div>
+<nb-accordion *ngIf="user" multi>
+  <nb-accordion-item expanded>
+    <nb-accordion-item-header> Informations Utilisateur</nb-accordion-item-header>
+
+    <nb-accordion-item-body>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Nom d'utilisateur :</label>
+            <span class="ml-2">{{user.login}}</span>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Nom et Prénom :</label>
+            <span class="ml-2">{{user.firstName}} {{user.lastName}}</span>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Email :</label>
+            <span class="ml-2">{{user.email}}</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Date d'embauche :</label>
+            <span class="ml-2">{{user.dateEmbauche | date}}</span>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Date d'installation :</label>
+            <span class="ml-2">{{user.instalationDate | date}}</span>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Date d'intégration :</label>
+            <span class="ml-2">{{user.integrationDate | date}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Numéro de téléphone :</label>
+            <span class="ml-2">{{user.phoneNumber}}</span>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Date de création :</label>
+            <span class="ml-2">{{user?.createdDate | date}}</span>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Dernière modification par :</label>
+            <span class="ml-2">{{user?.lastModifiedBy}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Dernière modification :</label>
+            <span class="ml-2">{{user?.lastModifiedDate | date}}</span>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="col-lg-12 pl-0 font-weight-600">Crée par :</label>
+            <span class="ml-2">{{user?.createdBy}}</span>
+          </div>
+        </div>
+      </div>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+
+  <nb-accordion-item>
+    <nb-accordion-item-header>Roles</nb-accordion-item-header>
+
+    <nb-accordion-item-body>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th width="10%" scope="col">Role</th><!--
+                        <th width="5%" scope="col">Actions</th>-->
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let authority of user.authorities">
+            <td>{{authority}}</td>
+            <!--<td >
+                <button (click)="profildetails(profil.id)" nbButton size="small" status="basic"> Accéder
+                    <nb-icon icon="arrowhead-right-outline"
+                             pack="eva">
+                    </nb-icon>
+                </button>
+            </td>-->
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>
+

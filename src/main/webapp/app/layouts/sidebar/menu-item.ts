@@ -73,6 +73,28 @@ export const USER_MENU: NbMenuItem[] = [
     ],
   },
   {
+    title: 'Services',
+    icon: 'copy-outline',
+    expanded: false,
+    children: [
+      {
+        title: 'On Boarding',
+        icon: 'people-outline',
+        link: 'admin/on-boarding-users',
+      },
+      {
+        title: 'Off Boarding',
+        icon: 'people-outline',
+        link: 'admin/off-boarding-users',
+      },
+      {
+        title: 'Expatriation',
+        icon: 'people-outline',
+        link: 'admin/expatriation-users',
+      }
+    ],
+  },
+  {
     title: 'Demandes',
     icon: 'monitor-outline',
     expanded: false,
