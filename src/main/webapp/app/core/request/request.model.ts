@@ -2,6 +2,7 @@ export interface Pagination {
   page: number;
   size: number;
   sort: string[];
+  isOnBoarding: boolean
 }
 
 export interface Search {

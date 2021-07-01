@@ -69,18 +69,45 @@ export const USER_MENU: NbMenuItem[] = [
         title: 'Utilisateurs',
         icon: 'people-outline',
         link: 'admin/user-management',
+      }
+    ],
+  },
+  {
+    title: 'Services',
+    icon: 'copy-outline',
+    expanded: false,
+    children: [
+      {
+        title: 'On Boarding',
+        icon: 'people-outline',
+        link: 'admin/on-boarding-users',
       },
       {
-        title: 'Audit',
-        icon: 'monitor-outline',
-        expanded: false,
-        children: [
-          {
-            title: 'Audit Rapports',
-            icon: 'options-outline',
-            link: 'admin/audit-report',
-          },
-        ],
+        title: 'Off Boarding',
+        icon: 'people-outline',
+        link: 'admin/off-boarding-users',
+      },
+      {
+        title: 'Expatriation',
+        icon: 'people-outline',
+        link: 'admin/expatriation-users',
+      }
+    ],
+  },
+  {
+    title: 'Demandes',
+    icon: 'monitor-outline',
+    expanded: false,
+    children: [
+      {
+        title: 'Lancer une demande',
+        icon: 'plus-outline',
+        link: 'request/new',
+      },
+      {
+        title: 'Mes demandes',
+        icon: 'list-outline',
+        link: 'request',
       },
     ],
   },

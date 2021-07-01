@@ -30,7 +30,25 @@ export class UserManagementUpdateComponent implements OnInit {
     email: ['', [Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     activated: [],
     langKey: [],
-    authorities: [],
+    dateEmbauche: [],
+    phoneNumber: [''],
+    isOnBoarding: [''],
+    isOffBoarding: [''],
+    isExpatriation: [''],
+    dateOffBoarding: [''],
+    ticketOffBoarding: [''],
+    dateExpatriation: [''],
+    ticketExpatriation: [''],
+    ancienMatricule: [''],
+    nouveauMatricule: [''],
+    contactItSiteDepart: [''],
+    contactItSiteArrivee: [''],
+    remarqueRh: [''],
+    firstCallBackDay: [''],
+    integrationDate: [''],
+    instalationDate: [''],
+    comment: [''],
+    authorities: [''],
   });
 
   constructor(private userService: UserManagementService, private route: ActivatedRoute, private fb: FormBuilder) {}
@@ -78,6 +96,24 @@ export class UserManagementUpdateComponent implements OnInit {
       email: user.email,
       activated: user.activated,
       langKey: user.langKey,
+      dateEmbauche: user.dateEmbauche,
+      phoneNumber: user.phoneNumber,
+      isOnBoarding: user.isOnBoarding,
+      isOffBoarding: user.isOffBoarding,
+      isExpatriation: user.isExpatriation,
+      dateOffBoarding: user.dateOffBoarding,
+      ticketOffBoarding: user.ticketOffBoarding,
+      dateExpatriation: user.dateExpatriation,
+      ticketExpatriation: user.ticketExpatriation,
+      ancienMatricule: user.ancienMatricule,
+      nouveauMatricule: user.nouveauMatricule,
+      contactItSiteDepart: user.contactItSiteDepart,
+      contactItSiteArrivee: user.contactItSiteArrivee,
+      remarqueRh: user.remarqueRh,
+      firstCallBackDay: user.firstCallBackDay,
+      integrationDate: user.integrationDate,
+      instalationDate: user.instalationDate,
+      comment: user.comment,
       authorities: user.authorities,
     });
   }
@@ -89,6 +125,24 @@ export class UserManagementUpdateComponent implements OnInit {
     user.email = this.editForm.get(['email'])!.value;
     user.activated = this.editForm.get(['activated'])!.value;
     user.langKey = this.editForm.get(['langKey'])!.value;
+    user.dateEmbauche = this.editForm.get(['dateEmbauche'])!.value;
+    user.phoneNumber = this.editForm.get(['phoneNumber'])!.value;
+    user.isOnBoarding = this.editForm.get(['isOnBoarding'])!.value;
+    user.isOffBoarding = this.editForm.get(['isOffBoarding'])!.value;
+    user.isExpatriation = this.editForm.get(['isExpatriation'])!.value;
+    user.dateOffBoarding = this.editForm.get(['dateOffBoarding'])!.value;
+    user.ticketOffBoarding = this.editForm.get(['ticketOffBoarding'])!.value;
+    user.dateExpatriation = this.editForm.get(['dateExpatriation'])!.value;
+    user.ticketExpatriation = this.editForm.get(['ticketExpatriation'])!.value;
+    user.ancienMatricule = this.editForm.get(['ancienMatricule'])!.value;
+    user.nouveauMatricule = this.editForm.get(['nouveauMatricule'])!.value;
+    user.contactItSiteDepart = this.editForm.get(['contactItSiteDepart'])!.value;
+    user.contactItSiteArrivee = this.editForm.get(['contactItSiteArrivee'])!.value;
+    user.remarqueRh = this.editForm.get(['remarqueRh'])!.value;
+    user.firstCallBackDay = this.editForm.get(['firstCallBackDay'])!.value;
+    user.integrationDate = this.editForm.get(['integrationDate'])!.value;
+    user.instalationDate = this.editForm.get(['instalationDate'])!.value;
+    user.comment = this.editForm.get(['comment'])!.value;
     user.authorities = this.editForm.get(['authorities'])!.value;
   }
 

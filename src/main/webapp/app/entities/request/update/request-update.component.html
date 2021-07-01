@@ -1,0 +1,226 @@
+<!--
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-request-heading" data-cy="RequestCreateUpdateHeading">Create or edit a Request</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_isValid">Is Valid</label>
+          <input type="checkbox" class="form-check" name="isValid" id="field_isValid" data-cy="isValid" formControlName="isValid" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_isDelivered">Is Delivered</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isDelivered"
+            id="field_isDelivered"
+            data-cy="isDelivered"
+            formControlName="isDelivered"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_deliveryDate">Delivery Date</label>
+          <div class="input-group">
+            <input
+              id="field_deliveryDate"
+              data-cy="deliveryDate"
+              type="text"
+              class="form-control"
+              name="deliveryDate"
+              ngbDatepicker
+              #deliveryDateDp="ngbDatepicker"
+              formControlName="deliveryDate"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="deliveryDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_createdDate">Created Date</label>
+          <div class="input-group">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="text"
+              class="form-control"
+              name="createdDate"
+              ngbDatepicker
+              #createdDateDp="ngbDatepicker"
+              formControlName="createdDate"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="createdDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_comment">Comment</label>
+          <input type="text" class="form-control" name="comment" id="field_comment" data-cy="comment" formControlName="comment" />
+          <div *ngIf="editForm.get('comment')!.invalid && (editForm.get('comment')!.dirty || editForm.get('comment')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('comment')?.errors?.maxlength">
+              This field cannot be longer than 2000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_createdBy">Created By</label>
+          <select class="form-control" id="field_createdBy" data-cy="createdBy" name="createdBy" formControlName="createdBy">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('createdBy')!.value?.id ? editForm.get('createdBy')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.login }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_validatedBy">Validated By</label>
+          <select class="form-control" id="field_validatedBy" data-cy="validatedBy" name="validatedBy" formControlName="validatedBy">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('validatedBy')!.value?.id ? editForm.get('validatedBy')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.login }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+-->
+<nb-card size='medium'>
+  <nb-card-header>Ajouter/Modifier une demande</nb-card-header>
+  <nb-card-body>
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class='row'>
+        <div class='col-sm-6'>
+          <div class='form-group'>
+            <label for='field_body' class='label'>Body</label>
+            <nb-select
+              [fullWidth]='true'
+              name='body'
+              formControlName='body'
+              id='field_body'
+              data-cy='body'
+              placeholder='Matériel'
+              class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+            >
+              <nb-option value='DESKTOP'>DESKTOP</nb-option>
+              <nb-option value='PHONE'>PHONE</nb-option>
+              <nb-option value='TABLET'>TABLET</nb-option>
+              <nb-option value='LAPTOP'>LAPTOP</nb-option>
+            </nb-select>
+          </div>
+        </div>
+        <div class='col-sm-6'>
+          <div class='form-group'>
+            <label for='field_deliveryDate' class='label'>Delivery Date</label>
+            <div class='input-group'>
+              <input
+                type='date'
+                nbinput=''
+                fullwidth=''
+                name='deliveryDate'
+                id='field_deliveryDate'
+                data-cy='deliveryDate'
+                formControlName='deliveryDate'
+                placeholder='YYYY-MM-DD'
+                ngbDatepicker
+                #birthDateDp='ngbDatepicker'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-sm-6'>
+          <div class='form-group'>
+            <label for="field_isDelivered" class="label">Matériel livré</label>
+            <div class="input-group">
+              <nb-checkbox name="isDelivered" id="field_isDelivered" data-cy="isDelivered" formControlName="isDelivered">Matériel livré</nb-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class='col-sm-6'>
+          <div class='form-group'>
+            <label for="field_isValid" class="label">Demande validée</label>
+            <div class="input-group">
+              <nb-checkbox name="isValid" id="field_isValid" data-cy="isValid" formControlName="isValid">Demande validée</nb-checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-sm-12'>
+          <div class='form-group'>
+            <label for="field_comment" class="label">Comments</label>
+            <textarea
+              nbInput
+              fullWidth
+              name="comment"
+              id="field_comment"
+              data-cy="comment"
+              formControlName="comment"
+            ></textarea>
+            <div *ngIf="editForm.get('comment')!.invalid && (editForm.get('comment')!.dirty || editForm.get('comment')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('comment')?.errors?.maxlength">
+                This field cannot be longer than 2000 characters.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-sm-6'>
+          <button nbButton (click)="previousState()" fullWidth status="warning">Cancel</button>
+        </div>
+        <div class='col-sm-6'>
+          <button nbButton fullWidth status="success" type="submit"
+                  id="save-entity"
+                  data-cy="entityCreateSaveButton"
+                  [disabled]="editForm.invalid || isSaving">Sauvegarder</button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

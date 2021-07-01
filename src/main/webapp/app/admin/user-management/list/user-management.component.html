@@ -1,3 +1,4 @@
+<!--
 <div>
   <h2>
     <span id="user-management-page-heading" data-cy="userManagementPageHeading">Users</span>
@@ -102,5 +103,49 @@
         (pageChange)="transition()"
       ></ngb-pagination>
     </div>
+  </div>
+</div>
+-->
+
+<div class='row'>
+  <div class='col-6'><h2>Utilisateurs</h2></div>
+  <div class='col-6'>
+    <button class='float-right' nbButton [routerLink]="['./new']" status='primary'>Ajouter un utilisateur</button>
+  </div>
+</div>
+
+<nb-card *ngIf='users'>
+  <nb-list>
+    <nb-list-item *ngFor='let user of users; trackBy: trackIdentity'>
+      <nb-user name='{{user.email}}' title='{{user.lastName}} {{user.firstName}}'>
+      </nb-user>
+
+      <!--
+      <button size="small" style="margin-left: auto;" nbButton status="danger" class="float-left" (click)="setActive(user, true)" *ngIf="!user.activated"
+              jhiTranslate="userManagement.deactivated">Deactivated</button>
+      <button size="small" style="margin-left: auto;" nbButton status="success" class="float-left" (click)="setActive(user, false)" *ngIf="user.activated"
+              [disabled]="!currentAccount || currentAccount.login === user.login" jhiTranslate="userManagement.activated">Activated</button>
+-->
+      <button [routerLink]="['./', user.login, 'view']" style='margin-left: auto;' class='float-right' nbButton
+              size='small' status='basic'>Consulter
+        <nb-icon icon='eye-outline'
+                 pack='eva'>
+        </nb-icon>
+      </button>
+    </nb-list-item>
+  </nb-list>
+</nb-card>
+
+<div *ngIf='users && users.length > 0'>
+  <div class='row justify-content-center'>
+    <ngb-pagination
+      [collectionSize]='totalItems'
+      [(page)]='page'
+      [pageSize]='itemsPerPage'
+      [maxSize]='5'
+      [rotate]='true'
+      [boundaryLinks]='true'
+      (pageChange)='transition()'
+    ></ngb-pagination>
   </div>
 </div>

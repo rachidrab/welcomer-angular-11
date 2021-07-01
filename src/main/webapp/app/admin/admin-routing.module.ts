@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 @NgModule({
   imports: [
@@ -11,6 +10,27 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./user-management/user-management.module').then(m => m.UserManagementModule),
         data: {
           pageTitle: 'Users',
+        },
+      },
+      {
+        path: 'on-boarding-users',
+        loadChildren: () => import('./on-boarding-users/on-boarding-users.module').then(m => m.OnBoardingUsersModule),
+        data: {
+          pageTitle: 'OnBoarding Users',
+        },
+      },
+      {
+        path: 'off-boarding-users',
+        loadChildren: () => import('./off-boarding-users/off-boarding-users.module').then(m => m.OffBoardingUsersModule),
+        data: {
+          pageTitle: 'OffBoarding Users',
+        },
+      },
+      {
+        path: 'expatriation-users',
+        loadChildren: () => import('./expatriation-users/expatriation-users.module').then(m => m.ExpatriationUsersModule),
+        data: {
+          pageTitle: 'Expatriation Users',
         },
       },
       {

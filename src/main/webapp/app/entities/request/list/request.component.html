@@ -1,0 +1,205 @@
+<!--
+<div>
+  <h2 id="page-heading" data-cy="RequestHeading">
+    <span>Requests</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-request"
+        [routerLink]="['/request/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Request </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="requests?.length === 0">
+    <span>No requests found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="requests && requests.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="isValid"><span>Is Valid</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="isDelivered"><span>Is Delivered</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="deliveryDate"><span>Delivery Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="createdDate"><span>Created Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="comment"><span>Comment</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="createdBy.login"><span>Created By</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="validatedBy.login"><span>Validated By</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of requests; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/request', request.id, 'view']">{{ request.id }}</a>
+          </td>
+          <td>{{ request.isValid }}</td>
+          <td>{{ request.isDelivered }}</td>
+          <td>{{ request.deliveryDate | formatMediumDate }}</td>
+          <td>{{ request.createdDate | formatMediumDate }}</td>
+          <td>{{ request.comment }}</td>
+          <td>
+            {{ request.createdBy?.login }}
+          </td>
+          <td>
+            {{ request.validatedBy?.login }}
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/request', request.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/request', request.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(request)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="requests && requests.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
+-->
+
+<div class='row'>
+  <div class='col-4'><h2>Mes demandes</h2></div>
+  <div class='col-4'>
+    <!-- <input #autoInput
+           nbInput
+           type="text"
+           placeholder="Rechercher un context"
+           [nbAutocomplete]="auto"
+           style="width: 100%; max-width: 100%;"
+    />
+
+    <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+
+        <nb-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+            {{ option }}
+        </nb-option>
+
+    </nb-autocomplete>-->
+  </div>
+  <div class='col-4'>
+    <button class='float-right' nbButton
+            [routerLink]="['/request/new']" status='primary'>Créer une demande
+    </button>
+  </div>
+</div>
+
+
+<div *ngIf='requests?.length === 0'>
+  <nb-card>
+    <nb-card-body class='example-last-child-no-b-margin'>
+      <nb-alert status='warning'>Aucune demande trouvée!</nb-alert>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<div class='row mt-4' *ngIf='requests && requests.length > 0'>
+  <div class='col-4' *ngFor='let request of requests ;trackBy: trackId'>
+    <nb-card accent='info'>
+      <nb-card-header>
+        <div class='row'>
+          <div class='col-6'>{{request.body}}</div>
+          <div class='col-6'>
+            <button [routerLink]="['/request', request.id, 'view']" style='margin-left: auto;'
+                    class='float-right' nbButton size='small' status='basic'> Accéder
+              <nb-icon icon='arrowhead-right-outline'
+                       pack='eva'>
+              </nb-icon>
+            </button>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-footer>
+        <div class='row'>
+          <div class='col-12' *ngIf='request.isValid'>Demande validée</div>
+          <div class='col-12' *ngIf='!request.isValid'>Demande non validée</div>
+        </div>
+      </nb-card-footer>
+      <nb-card-footer>
+        <div class='row'>
+          <div class='col-12'><span *ngIf='request.isDelivered'>Matériel Livré</span>
+          </div>
+          <div class='col-12'><span *ngIf='!request.isDelivered'>Matériel n'est pas encore livré</span>
+          </div>
+        </div>
+      </nb-card-footer>
+      <nb-card-footer>
+        <div class='row'>
+          <div class='col-6'>Créee le {{request.createdDate?.format('DD/MM/YYYY')}}</div>
+        </div>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+
+</div>
+
+
+<div *ngIf='requests && requests.length > 0'>
+  <div class='row justify-content-center'>
+    <ngb-pagination
+      [collectionSize]='totalItems'
+      [(page)]='ngbPaginationPage'
+      [pageSize]='itemsPerPage'
+      [maxSize]='5'
+      [rotate]='true'
+      [boundaryLinks]='true'
+      (pageChange)='loadPage($event)'
+    ></ngb-pagination>
+  </div>
+</div>
+
