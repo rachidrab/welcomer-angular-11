@@ -1,0 +1,550 @@
+<nb-card>
+  <nb-card-body>
+    <form name='editForm' role='form' novalidate (ngSubmit)='save()' [formGroup]='editForm'>
+      <h2 style='text-align: center;' class='mb-4 mt-4'>Créer un utilisateur [Expatriation]</h2>
+      <div *ngIf='user'>
+        <jhi-alert-error></jhi-alert-error>
+        <div class='form-group' [hidden]="!editForm.get('id')!.value">
+          <label for='id' jhiTranslate='global.field.id'>ID</label>
+          <input type='text' class='form-control' id='id' name='id' formControlName='id' readonly />
+        </div>
+
+        <div class='row'>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_login' class='label'>Nom d'utilisateur</label>
+              <input
+                type='text'
+                nbinput=''
+                fullwidth=''
+                name='login'
+                id='field_login'
+                data-cy='login'
+                formControlName='login'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('login')!.invalid && (editForm.get('login')!.dirty || editForm.get('login')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('login')?.errors?.required">
+                  Ce champ est obligatoire.
+                </small>
+
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('login')?.errors?.maxlength">
+                  This field cannot be longer than 50 characters.
+                </small>
+
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('login')?.errors?.pattern">
+                  This field can only contain letters, digits and e-mail addresses.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_firstName' class='label'>Prénom</label>
+              <input
+                type='text'
+                nbinput=''
+                fullwidth=''
+                name='firstName'
+                id='field_firstName'
+                data-cy='firstName'
+                formControlName='firstName'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('firstName')?.errors?.maxlength">
+                  This field cannot be longer than 50 characters.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_lastName' class='label'>Nom de famille</label>
+              <input
+                type='text'
+                nbinput=''
+                fullwidth=''
+                name='lastName'
+                id='field_lastName'
+                data-cy='lastName'
+                formControlName='lastName'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('lastName')?.errors?.maxlength">
+                  This field cannot be longer than 50 characters.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_email' class='label'>Email</label>
+              <input
+                type='email'
+                nbinput=''
+                fullwidth=''
+                name='email'
+                id='field_email'
+                data-cy='email'
+                formControlName='email'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('email')?.errors?.required">
+                  This field is required.
+                </small>
+
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('email')?.errors?.maxlength">
+                  This field cannot be longer than 100 characters.
+                </small>
+
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('email')?.errors?.minlength">
+                  This field is required to be at least 5 characters.
+                </small>
+
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('email')?.errors?.email">
+                  Your email is invalid.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_activated' class='label'>Activé</label>
+              <div class='input-group'>
+                <nb-checkbox name='activated' id='field_activated' data-cy='activated' formControlName='activated'>
+                  Utilisateur Activé
+                </nb-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_authority' class='label'>Habilitations</label>
+              <nb-select
+                [multiple]='true'
+                [fullWidth]='true'
+                name='authority'
+                formControlName='authorities'
+                id='field_authority'
+                data-cy='authority'
+                placeholder='Habilitations'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              >
+                <nb-option *ngFor='let authority of authorities' [value]='authority'>{{ authority }}</nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_dateEmbauche' class='label'>Date Embauche</label>
+              <input
+                type='date'
+                nbinput=''
+                fullwidth=''
+                name='dateEmbauche'
+                id='field_dateEmbauche'
+                data-cy='dateEmbauche'
+                formControlName='dateEmbauche'
+                placeholder='YYYY-MM-DD'
+                ngbDatepicker
+                #dateDp='ngbDatepicker'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('dateEmbauche')!.invalid && (editForm.get('dateEmbauche')!.dirty || editForm.get('dateEmbauche')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('dateEmbauche')?.errors?.required" jhiTranslate='entity.validation.required'>
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_phoneNumber' class='label'>Phone number</label>
+              <input
+                type='text'
+                nbinput=''
+                fullwidth=''
+                name='phoneNumber'
+                id='field_phoneNumber'
+                data-cy='phoneNumber'
+                formControlName='phoneNumber'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_ancienMatricule' class='label'>Matricule</label>
+              <input
+                type='text'
+                nbinput=''
+                fullwidth=''
+                name='ancienMatricule'
+                id='field_ancienMatricule'
+                data-cy='ancienMatricule'
+                formControlName='ancienMatricule'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('ancienMatricule')!.invalid && (editForm.get('ancienMatricule')!.dirty || editForm.get('ancienMatricule')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('ancienMatricule')?.errors?.maxlength">
+                  This field cannot be longer than 50 characters.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_integrationDate' class='label'>Date d'intégration</label>
+              <input
+                type='date'
+                nbinput=''
+                fullwidth=''
+                name='integrationDate'
+                id='field_integrationDate'
+                data-cy='integrationDate'
+                formControlName='integrationDate'
+                placeholder='YYYY-MM-DD'
+                ngbDatepicker
+                #dateDp='ngbDatepicker'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('integrationDate')!.invalid && (editForm.get('integrationDate')!.dirty || editForm.get('integrationDate')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('integrationDate')?.errors?.required"
+                       jhiTranslate='entity.validation.required'>
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_instalationDate' class='label'>Date d'instalation</label>
+              <input
+                type='date'
+                nbinput=''
+                fullwidth=''
+                name='instalationDate'
+                id='field_instalationDate'
+                data-cy='instalationDate'
+                formControlName='instalationDate'
+                placeholder='YYYY-MM-DD'
+                ngbDatepicker
+                #dateDp='ngbDatepicker'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('instalationDate')!.invalid && (editForm.get('instalationDate')!.dirty || editForm.get('instalationDate')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('instalationDate')?.errors?.required"
+                       jhiTranslate='entity.validation.required'>
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_dateExpatriation' class='label'>Date Expatriation</label>
+              <input
+                type='date'
+                nbinput=''
+                fullwidth='true'
+                name='dateExpatriation'
+                id='field_dateExpatriation'
+                data-cy='dateExpatriation'
+                formControlName='dateExpatriation'
+                placeholder='YYYY-MM-DD'
+                ngbDatepicker
+                #dateDp='ngbDatepicker'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('dateExpatriation')!.invalid && (editForm.get('dateExpatriation')!.dirty || editForm.get('dateExpatriation')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('dateExpatriation')?.errors?.required"
+                       jhiTranslate='entity.validation.required'>
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_nouveauMatricule' class='label'>Nouveau Matricule</label>
+              <input
+                type='text'
+                nbinput=''
+                fullwidth=''
+                name='nouveauMatricule'
+                id='field_nouveauMatricule'
+                data-cy='nouveauMatricule'
+                formControlName='nouveauMatricule'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('nouveauMatricule')!.invalid && (editForm.get('nouveauMatricule')!.dirty || editForm.get('nouveauMatricule')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('nouveauMatricule')?.errors?.maxlength">
+                  This field cannot be longer than 50 characters.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_contactItSiteDepart' class='label'>Contact IT du site de départ</label>
+              <input
+                type='text'
+                nbinput=''
+                fullwidth=''
+                name='contactItSiteDepart'
+                id='field_contactItSiteDepart'
+                data-cy='contactItSiteDepart'
+                formControlName='contactItSiteDepart'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('contactItSiteDepart')!.invalid && (editForm.get('contactItSiteDepart')!.dirty || editForm.get('contactItSiteDepart')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('contactItSiteDepart')?.errors?.maxlength">
+                  This field cannot be longer than 50 characters.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class='form-group'>
+              <label for='field_contactItSiteArrivee' class='label'>Contact IT du site d'arrivée</label>
+              <input
+                type='text'
+                nbinput=''
+                fullwidth=''
+                name='contactItSiteArrivee'
+                id='field_contactItSiteArrivee'
+                data-cy='contactItSiteArrivee'
+                formControlName='contactItSiteArrivee'
+                class='input-full-width size-medium status-basic shape-rectangle nb-transition'
+              />
+              <div
+                *ngIf="editForm.get('contactItSiteArrivee')!.invalid && (editForm.get('contactItSiteArrivee')!.dirty || editForm.get('contactItSiteArrivee')!.touched)">
+                <small class='form-text text-danger'
+                       *ngIf="editForm.get('contactItSiteArrivee')?.errors?.maxlength">
+                  This field cannot be longer than 50 characters.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="field_ticketExpatriation" class="label">Ticket Expatriation</label>
+              <textarea
+                nbInput
+                fullWidth
+                name="ticketExpatriation"
+                id="field_ticketExpatriation"
+                data-cy="ticketExpatriation"
+                placeholder="Ticket Expatriation"
+                formControlName="ticketOffBoarding"
+              >
+            </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="field_remarqueRh" class="label">Remarques Rh</label>
+              <textarea
+                nbInput
+                fullWidth
+                name="remarqueRh"
+                id="field_remarqueRh"
+                data-cy="remarqueRh"
+                placeholder="Remarques RH"
+                formControlName="remarqueRh"
+              >
+            </textarea>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="field_comment" class="label">Commentaires</label>
+              <textarea
+                nbInput
+                fullWidth
+                name="comment"
+                id="field_comment"
+                data-cy="comment"
+                placeholder="Commentaires"
+                formControlName="comment"
+              >
+            </textarea>
+            </div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-sm-6'>
+            <button id='cancel-save' (click)='previousState()' nbButton fullWidth><span
+              jhiTranslate='entity.action.cancel'>Cancel</span>
+              <nb-icon icon='close-outline'></nb-icon>
+            </button>
+          </div>
+          <div class='col-sm-6'>
+            <button type='submit' [disabled]='editForm.invalid || isSaving' nbButton fullWidth><span
+              jhiTranslate='entity.action.save'>Save</span>
+              <nb-icon icon='plus-outline'></nb-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+
+<!--
+<div class='row justify-content-center'>
+  <div class='col-8'>
+    <form name='editForm' role='form' novalidate (ngSubmit)='save()' [formGroup]='editForm'>
+      <h2 id='myUserLabel'>Create or edit a User</h2>
+
+      <div *ngIf='user'>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class='form-group' [hidden]='!user.id'>
+          <label>ID</label>
+          <input type='text' class='form-control' name='id' formControlName='id' readonly />
+        </div>
+
+        <div class='form-group'>
+          <label class='form-control-label'>Login</label>
+          <input type='text' class='form-control' name='login' formControlName='login' />
+
+          <div
+            *ngIf="editForm.get('login')!.invalid && (editForm.get('login')!.dirty || editForm.get('login')!.touched)">
+            <small class='form-text text-danger' *ngIf="editForm.get('login')?.errors?.required"> This field is
+              required. </small>
+
+            <small class='form-text text-danger' *ngIf="editForm.get('login')?.errors?.maxlength">
+              This field cannot be longer than 50 characters.
+            </small>
+
+            <small class='form-text text-danger' *ngIf="editForm.get('login')?.errors?.pattern">
+              This field can only contain letters, digits and e-mail addresses.
+            </small>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <label class='form-control-label'>First Name</label>
+          <input type='text' class='form-control' name='firstName' formControlName='firstName' />
+
+          <div
+            *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+            <small class='form-text text-danger' *ngIf="editForm.get('firstName')?.errors?.maxlength">
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <label>Last Name</label>
+          <input type='text' class='form-control' name='lastName' formControlName='lastName' />
+
+          <div
+            *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
+            <small class='form-text text-danger' *ngIf="editForm.get('lastName')?.errors?.maxlength">
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <label class='form-control-label'>Email</label>
+          <input type='email' class='form-control' name='email' formControlName='email' />
+
+          <div
+            *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small class='form-text text-danger' *ngIf="editForm.get('email')?.errors?.required"> This field is
+              required. </small>
+
+            <small class='form-text text-danger' *ngIf="editForm.get('email')?.errors?.maxlength">
+              This field cannot be longer than 100 characters.
+            </small>
+
+            <small class='form-text text-danger' *ngIf="editForm.get('email')?.errors?.minlength">
+              This field is required to be at least 5 characters.
+            </small>
+
+            <small class='form-text text-danger' *ngIf="editForm.get('email')?.errors?.email"> Your email is
+              invalid. </small>
+          </div>
+        </div>
+
+        <div class='form-check'>
+          <label class='form-check-label' for='activated'>
+            <input
+              class='form-check-input'
+              [attr.disabled]="user.id === undefined ? 'disabled' : null"
+              type='checkbox'
+              id='activated'
+              name='activated'
+              formControlName='activated'
+            />
+            <span>Activated</span>
+          </label>
+        </div>
+
+        <div class='form-group'>
+          <label>Profiles</label>
+          <select class='form-control' multiple name='authority' formControlName='authorities'>
+            <option *ngFor='let authority of authorities' [value]='authority'>{{ authority }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf='user'>
+        <button type='button' class='btn btn-secondary' (click)='previousState()'>
+          <fa-icon icon='ban'></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button type='submit' [disabled]='editForm.invalid || isSaving' class='btn btn-primary'>
+          <fa-icon icon='save'></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+-->
